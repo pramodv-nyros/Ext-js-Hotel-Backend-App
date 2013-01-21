@@ -1,0 +1,299 @@
+<html>
+    <head>
+        <title id="page-title">Seach view </title>
+        <!-- Library Files -->
+        <link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+        <script type="text/javascript" src="extjs/ext-all-debug.js">
+        </script>
+           <script type="text/javascript" src="invoices-model.js">
+        </script>
+        <script type="text/javascript" src="invoices-store.js">
+        </script>
+        <script type="text/javascript">
+        Ext.onReady(function() {
+    var card1 = new Ext.panel.Panel({
+                    bodyStyle: 'padding: 20px',
+                    title: 'Family Search',
+                   width:760,
+                    height:250,
+                   //anchor:'10%',
+                    // height: eachWindowHeight,
+                    margin:30,
+        icon:'./group-by.gif',
+                    border: true,
+                    items: [{
+                          xtype:'combo'
+                        ,fieldLabel:'Facility'
+                        ,store:['Item 1', 'Item 2']
+                    },{
+                        // column layout with 2 columns
+                            layout:'column',
+                            border:false,
+                            margin:'0 0 3 0'
+                        // defaults for columns
+                            ,defaults:{
+                                 columnWidth:0.37
+                                ,layout:'form'
+                                ,border:false
+                                ,xtype:'panel'
+                                ,bodyStyle:'padding:0 10px 0 0'
+                            }
+                            ,items:[{
+                                // left column
+                                // defaults for fields
+                                 defaults:{anchor:'100%'}
+                                ,items:[{
+                                     xtype: 'textfield',
+                                    fieldLabel: 'Last Name'
+                                },{
+                                     xtype: 'textfield',
+                                    fieldLabel: 'Pet Name'
+                                }]
+                            },{
+                                // right column
+                                // defaults for fields
+                                 defaults:{anchor:'100%'}
+                                ,items:[{
+                                     xtype: 'textfield',
+                                    fieldLabel: 'First Name'
+                                },{
+                                     xtype: 'textfield',
+                                    fieldLabel: 'Family Name'
+                                }]
+                            }]
+                    },{
+                        xtype: 'textfield',
+                        fieldLabel: 'Email',
+                        vtype: 'email'
+                    },{
+                        xtype: 'textfield',
+                        fieldLabel: 'Phone'
+                    },{
+                        // column layout with 2 columns
+                            layout:'column',
+                            border:false
+                            ,margin:'10 0 0 90'
+                           
+                        // defaults for columns
+                            ,defaults:{
+                                 columnWidth:0.25
+                                ,layout:'form'
+                                ,margin:'0 2 3 6'
+                                ,padding:10
+                                ,border:false
+                                ,xtype:'panel'
+                            }
+                            ,items:[{
+                              
+                                items:[{
+                                     xtype: 'button',
+                                    text: 'Clear'
+                                }]
+                            },{
+                                
+                                items:[{
+                                     xtype: 'button',
+                                    text: 'Search'
+                                }]
+                            }]
+                    }]
+    });
+    var store = Ext.create('Ext.data.TreeStore', {
+            root : {
+                expanded : true,
+                children : [  {
+                    text : "Family Profile(0)",
+                    leaf : true
+                }, {
+                    text : "Reservation(0)",
+                    leaf : true
+                }, {
+                    text : "Opearations",
+                    leaf : true
+                }, {
+                    text : "Managements",
+                    leaf : true
+                } ]
+            }
+    });
+    
+
+
+    var westPanel = Ext.create('Ext.tree.Panel', {
+        title : 'List',
+        region : 'west',
+        margins : '0 5 0 0',
+        collapsible: true,
+        width : 200,
+        store : store,
+       rootVisible : false
+//
+//            listeners : {
+//                 itemclick : function(tree, record, item, index, e, options) {
+//
+//                     var nodeText = record.data.text;
+//
+//                     var tabPanel = viewport.items.get(1);
+//                     var tabBar = tabPanel.getTabBar();
+//
+//                     for ( var i = 0; i < tabBar.items.length; i++) {
+//                         if (tabBar.items.get(i).getText() === nodeText) {
+//                             var tabIndex = i;
+//                         }
+//                     }
+//
+//                     if (Ext.isEmpty(tabIndex)) {
+//                         tabPanel.add({
+//                             title : record.data.text,
+//                             bodyPadding : 10,
+//                             html : record.data.text
+//                         });
+//
+//                         tabIndex = tabPanel.items.length - 1;
+//                     }
+//
+//                     tabPanel.setActiveTab(tabIndex);
+//                 }
+//            }
+    });
+    
+
+            var grouping = Ext.create('Ext.grid.feature.Grouping', {
+                //                id: 'InvoiceID',
+                // // ftype: 'groupingsummary',
+                // // groupHeaderTpl: '{name}',
+                groupHeaderTpl: 'Facility: {InvoiceID} ({rows.length} Invoice{[values.rows.length > 1 ? "s" : ""]})'
+               // groupHeaderTpl: '{[values.rows.InvoiceID]}'
+
+            });
+                
+                
+           var gri = Ext.create('Ext.grid.Panel', {
+                    title: 'Family Search Results',
+//                    height: 250,
+                   // width: '100%',
+                    margin:'0 30 0 30',
+                    icon:'./group-by.gif',
+                    store: invoiceStore,
+                    features: [grouping],
+                    columns: [{
+                        header: 'Facility',
+                        dataIndex: 'Facility'
+                        // hideable: false,
+                        //flex: 1
+                    }, {
+                        header: 'Family Name',
+                        dataIndex: 'FamilyName'
+                       // xtype: 'datecolumn',
+                        //format: 'd/m/Y'
+                    }, {
+                        header: 'First Name',
+                        dataIndex: 'FirstName'
+                      //  xtype: 'numbercolumn'
+                        // xtype: 'datecolumn',
+                        //format: 'd/m/Y'
+                    },{
+                        header: 'Dogs',
+                        dataIndex: 'Dogs'
+                        //xtype: 'numbercolumn'
+                    }, {
+                        header: 'Phone',
+                        dataIndex: 'Phone'
+                        //xtype: 'numbercolumn'
+                    },{
+                        header: 'Email',
+                        dataIndex: 'Email'
+                        //xtype: 'numbercolumn'
+                    },{
+                        header: 'CIty',
+                        dataIndex: 'City'
+                        //xtype: 'numbercolumn'
+                    },{
+                        header: 'State',
+                        dataIndex: 'State'
+                        //xtype: 'numbercolumn'
+                    }]
+
+                });
+
+
+
+
+
+// {
+//         name: 'InvoiceID',
+//         type: 'string'
+//     }, {
+//         name: 'Facility',
+//         type: 'string'
+//     }, {
+//         name: 'Family Name',
+//         type: 'string'
+//     },{
+//         name: 'Dogs',
+//         type: 'string'
+//     },{
+//         name: 'Cats',
+//         type: 'string'
+//     }, {
+//         name: 'Phone',
+//         type: 'float'
+//     }, {
+//         name: 'Email',
+//         type: 'string'
+//     }, {
+//         name: 'City',
+//         type: 'string'
+//     },{
+//         name: 'State',
+//         type: 'string'
+//     }
+
+
+
+
+
+
+
+
+
+
+
+                
+//gri.getColumnModel().setHidden(0, true);
+
+     
+    var viewport = Ext.create('Ext.container.Viewport', {
+        layout : 'border',
+        items : [ {
+            region: 'north',
+          //  margins: 5,
+            height: 50,
+            xtype: 'container',
+            html: 'Logo Here'
+        },westPanel, {
+            //xtype : 'tabpanel',
+            region : 'center',
+           layout: {
+                        type: 'vbox',
+                        //align: 'stretch',
+                        animate: true //{ duration: 2000, easing: 'easeIn' },
+                       // padding: 10
+                    },
+                    items: [card1,gri]
+            },{
+            region: 'south',
+           // margins: 5,
+            height: 30,
+            xtype: 'container',
+            html: 'footer Here'
+        }]
+        });
+    
+     
+    });
+    </script>
+    </head>
+    <body>
+    </body>
+</html>

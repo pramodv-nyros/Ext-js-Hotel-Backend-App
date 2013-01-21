@@ -1,0 +1,362 @@
+<html>
+    <head>
+        <title id="page-title">Search view </title>
+        <!-- Library Files -->
+        <link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+        <script type="text/javascript" src="extjs/ext-all-debug.js">
+        </script>
+        <style type="text/css">
+            .paid {
+                background-image: url(./add.png);
+                width: 16px;
+            }
+
+
+        </style>
+        <script type="text/javascript">
+
+            Ext.onReady(function(){
+                Ext.require(['Ext.data.*', 'Ext.grid.*']);
+                Ext.define('Restaurant', {
+                    extend: 'Ext.data.Model',
+                    fields: ['name', 'year']
+                });
+
+                var restaurants = Ext.create('Ext.data.Store', {
+                    storeId: 'restaraunts',
+                    model: 'Restaurant',
+                    groupField: 'year',
+                    sorters: ['year','name'],
+
+                data: [{
+                        name: '200',
+                        year: '2001'
+                    },{
+                        name: '100',
+                        year: '2001'
+                    },{
+                        name: '100',
+                        year: '2001'
+                    },{
+                        name: '200',
+                        year: '2001'
+                    },{
+                        name: '200',
+                        year: '2001'
+                    },{
+                        name: '100',
+                        year: '2001'
+                    },{
+                        name: '2002',
+                        year: '2001'
+                    },{
+                        name: '100',
+                        year: '2001'
+                    },{
+                        name: '100',
+                        year: '2002'
+                    },{
+                        name: '200',
+                        year: '2004'
+                    },{
+                        name: '300',
+                        year: '2006'
+                    },{
+                        name: '100',
+                        year: '2003'
+                    },{
+                        name: '200',
+                        year: '2001'
+                    }]
+                });
+//                var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
+//                    groupHeaderTpl:'{columnName}: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})',
+//                    hideGroupedHeader:true,
+//                    startCollapsed:true,
+//                    id:'restaurantGrouping'
+//                });
+                var store = Ext.create('Ext.data.TreeStore', {
+                    root : {
+                        expanded : true,
+                        children : [  {
+                            text : "Family Profile(0)",
+                            leaf : true
+                        }, {
+                            text : "Reservation(0)",
+                            leaf : true
+                        }, {
+                            text : "Opearations",
+                            leaf : true
+                        }, {
+                            text : "Managements",
+                            leaf : true
+                        } ]
+                    }
+                });
+                var gri = Ext.create('Ext.grid.Panel', {
+                   // renderTo: Ext.getBody(),
+                    collapsible: true,
+                    icon: './group-by.gif',
+                    frame: true,
+                    store: restaurants,
+                    width: 600,
+                    //height: 400,
+                    margin: '10 0 5 10',
+                    title: 'Family Stats',
+                    resizable: true,
+//                    features: [groupingFeature],
+//        tbar: ['->', {
+//            text: 'Toggle groups...',
+//            menu: toggleMenu
+//        }],
+
+                    // Keep checkbox menu items in sync with expand/collapse
+                  //  viewConfig: {
+//            listeners: {
+//                groupcollapse: function(v, n, groupName) {
+//                    if (!grid.down('[text=Toggle groups...]').disabled) {
+//                        grid.down('menucheckitem[text=' + groupName + ']').setChecked(false, true);
+//                    }
+//                },
+//                groupexpand: function(v, n, groupName) {
+//                    if (!grid.down('[text=Toggle groups...]').disabled) {
+//                        grid.down('menucheckitem[text=' + groupName + ']').setChecked(true, true);
+//                    }
+//                }
+//            }
+//
+//                {
+//                    xtype: 'actioncolumn',
+//                            hideable: false,
+//                        items: [{
+//                    icon: 'icons/pencil.png',
+//                    tooltip: 'Edit',
+//                    handler: function(grid, rowIndex, colIndex){
+//                        alert('Show "Edit Invoice" component');
+//                    }
+//                }
+
+
+                  //  },
+                    selModel: Ext.create('Ext.selection.CellModel'),
+
+                    columns: [
+                        Ext.create('Ext.grid.RowNumberer')
+//                        {
+//
+//                        xtype: 'actioncolumn',
+//                        hideable: false,
+//                        flex:0.025,
+//                        items: [{
+//                            icon: './add.png'
+//
+//                        }]},{
+                        ,{text: 'Year',
+                        flex: .1,
+                        dataIndex: 'year'
+                    },{
+                        text: '#Pets',
+                        flex: .1,
+                        dataIndex: 'name'
+                    },{
+                        text: '#Visits',
+                        flex: .1,
+                        dataIndex: 'name'
+                    },{
+                        text: 'Total Charges',
+                        flex: .1,
+                        dataIndex: 'name'
+                    }]
+   });
+                 /* AccoridianLayout
+                 *
+                 */
+                var mainMenu = Ext.create('Ext.tree.Panel', {
+                    title: 'All Lists',
+//                    collapsible: true,
+                    region: 'west',
+                    margins: '0 5 5 5',
+                    flex: .3,
+                    collapsible: true,
+                    titleCollapse: true,
+                    //layout: 'accordion',
+//                    layoutConfig: {
+//                        animate: false,
+//                        multi: true
+//                    },
+                    store : store
+                        ,rootVisible : false
+//                   
+                });
+
+
+                /**
+                 * Content Panel Wizard (Center Region)
+                 * CardLayout
+                 */
+                var card1 = new Ext.panel.Panel({
+                    bodyStyle: 'padding: 20px',
+                    title: 'Personal Info',
+                    border: false,
+                    items: [{
+                        xtype: 'textfield',
+                        fieldLabel: 'First Name'
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Last Name'
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Email Address',
+                        vtype: 'email'
+                    }]
+                });
+
+                var card2 = new Ext.panel.Panel({
+                    bodyStyle: 'padding: 20px',
+                    title: 'Account Info',
+                    border: false,
+                    items: [{
+                        xtype: 'textfield',
+                        fieldLabel: 'Username'
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Password',
+                        inputType: 'password'
+                    }]
+                });
+
+                var card3 = new Ext.panel.Panel({
+                    bodyStyle: 'padding: 20px',
+                    title: 'Account Creation Successful!',
+                    border: false,
+                    html: 'Success!'
+                });
+
+                var createUserWizard = Ext.create('Ext.panel.Panel', {
+                    title: 'Create User Wizard',
+                    layout: 'card',
+                    deferredRender: true,
+                    items: [card1, card2, card3],
+                    bbar: ['->', {
+                        xtype: 'button',
+                        text: 'Previous',
+                        handler: function(btn){
+                            var layout = createUserWizard.getLayout();
+
+                            if (layout.getPrev()) {
+                                layout.prev();
+                            }
+                        }
+                    }, {
+                        xtype: 'button',
+                        text: 'Next',
+                        handler: function(btn){
+                            var layout = createUserWizard.getLayout();
+
+                            if (layout.getNext()) {
+                                layout.next();
+                            }
+                        }
+                    }]
+                });
+
+
+                /**
+                 * User Management Panel (Center Region)
+                 * HBoxLayout and VBoxLayout combination
+                 */
+                var userManagementPanel = Ext.create('Ext.panel.Panel', {
+                    title: 'User Management',
+
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch',
+                        padding: 10
+                    },
+                    defaults: {
+                        flex: 1
+                    },
+                    items: [{
+                        xtype: 'container',
+                        margins: '0 5 0 0',
+
+                        layout: {
+                            type: 'vbox',
+
+                            align: 'stretch',
+                            animate: true
+                        },
+                        defaults: {
+                            flex: 1,
+                            frame: true
+                        },
+                        items: [{
+                            title: 'User Contact Information',
+                            margins: '0 0 5 0'
+                        }, {
+                            title: 'Session Log'
+                        }]
+                    }, {
+                        xtype: 'container',
+                        layout: {
+                            type: 'vbox',
+                           // collapsible: true,
+                            align: 'stretch',
+                            animate: true
+                        },
+                        defaults: {
+                            flex: 1,
+                            frame: true
+                        },
+                        items: [{
+                            title: 'Account Privileges',
+                            margins: '0 0 5 0'
+                        }, {
+                            title: 'Purchase History'
+                        }]
+                    }]
+                });
+
+                /**
+                 * Content Panel TabPanel (Center Region)
+                 */
+                var contentPanel = Ext.create('Ext.panel.Panel', {
+                    region:'center',
+                    margins:'0 5 5 0',
+
+                    //items:[createUserWizard, userManagementPanel]
+                   items:[gri]
+                });
+
+                /**
+                 * Viewport
+                 * BorderLayout
+                 */
+                Ext.create('Ext.container.Viewport', {
+                    layout: 'border',
+                    items: [{
+                        region: 'north',
+                        margins: 5,
+                        height: 50,
+                        xtype: 'container',
+                        html: 'Logo Here'
+                    }, mainMenu, contentPanel,{
+                        region: 'south',
+                        margins: 5,
+                        height: 50,
+                        xtype: 'container',
+                        html: 'footer Here'
+                    }]
+                });
+
+
+            });
+//            put_image: function(){
+//
+//                    return ;
+//                }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

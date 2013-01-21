@@ -1,0 +1,268 @@
+<html>
+    <head>
+        <title id="page-title"> Service Activity </title>
+        <!-- Library Files -->
+        <link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+        <script type="text/javascript" src="extjs/ext-all-debug.js">
+        </script>
+        <style type="text/css">
+
+
+
+        </style>
+        <script type="text/javascript">
+
+            Ext.onReady(function(){
+                Ext.require(['Ext.data.*', 'Ext.grid.*']);
+                Ext.define('Restaurant', {
+                    extend: 'Ext.data.Model',
+                    fields: ['facility', 'staff','date_field','time_field','room','activity','pet_name','notes']
+                });
+
+                var restaurants = Ext.create('Ext.data.Store', {
+                    storeId: 'restaraunts',
+                    model: 'Restaurant',
+                    //groupField: 'year',
+                    sorters: ['facility', 'staff','date_field','time_field','room','activity','pet_name','notes'],
+
+                data: [{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                    },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Pinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                },{
+                    facility: 'Facility',
+                    staff: 'Staff',
+                    date_field:'10-2-2012',
+                    time_field:'10:10pm',
+                    room:'Room',
+                    activity:'Activity',
+                    pet_name:'Tinky',
+                    notes: 'Content goes here...'
+                }]
+                });
+                var store = Ext.create('Ext.data.TreeStore', {
+                    root : {
+                        expanded : true,
+                        children : [  {
+                            text : "Family Profile(0)",
+                            leaf : true
+                        }, {
+                            text : "Reservation(0)",
+                            leaf : true
+                        }, {
+                            text : "Opearations",
+                            leaf : true
+                        }, {
+                            text : "Managements",
+                            leaf : true
+                        } ]
+                    }
+                });
+                var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+                    clicksToEdit: 1
+                });
+                var gri = Ext.create('Ext.grid.Panel', {
+                    collapsible: true,
+                    icon: './group-by.gif',
+                    frame: true,
+                    store: restaurants,
+                    //width: 600,
+                    height: '100%',
+                    margin: '10 15 5 10',
+                    title: 'Service Activity',
+                    plugins: [rowEditing],
+                    selType: 'rowmodel',
+                   // resizable: true,
+
+                    //selModel: Ext.create('Ext.selection.CellModel'),
+                    //sorters: ['facility', 'staff','date_field','time_field','room','activity','pet_name','notes'],
+                    columns: [
+                        Ext.create('Ext.grid.RowNumberer')
+                        ,{text: 'Facility',
+                        flex: .1,
+                        dataIndex: 'facility',
+                            editor: {
+                                allowBlank: false
+                            }
+                    },{
+                        text: 'Staff',
+                        flex: .1,
+                        dataIndex: 'staff',
+                            editor: {
+                                allowBlank: false
+                            }
+                    },{
+                        text: 'Date',
+                        flex: .1,
+                        dataIndex: 'date_field'
+                    },{
+                        text: 'Time',
+                        flex: .1,
+                        dataIndex: 'time_field'
+                    },{
+                            text: 'Room',
+                            flex: .1,
+                            dataIndex: 'room'
+                        },{
+                            text: 'Activity',
+                            flex: .1,
+                            dataIndex: 'activity'
+                        },{
+                            text: 'Pet Name',
+                            flex: .1,
+                            dataIndex: 'pet_name'
+                        },{
+                            text: 'Notes',
+                            flex: .1,
+                            dataIndex: 'notes',
+                            editor: {
+                                allowBlank: false
+                            }
+                        }]
+                });
+
+                var mainMenu = Ext.create('Ext.tree.Panel', {
+                    title: 'All Lists',
+//                    collapsible: true,
+                    region: 'west',
+                    margins: '0 5 0 5',
+                    flex: .3,
+                    collapsible: true,
+                    titleCollapse: true,
+
+                    store : store
+                        ,rootVisible : false
+                });
+
+                /**
+                 * Content Panel TabPanel (Center Region)
+                 */
+                var contentPanel = Ext.create('Ext.panel.Panel', {
+                    region:'center',
+                    margins:'0 5 0 0',
+
+                    //items:[createUserWizard, userManagementPanel]
+                   items:[gri]
+                });
+
+
+                Ext.create('Ext.container.Viewport', {
+                    layout: 'border',
+                    items: [{
+                        region: 'north',
+                        margins: 5,
+                        height: 50,
+                        //xtype: 'container',
+                        html: 'Logo Here'
+                    }, mainMenu, contentPanel,{
+                        region: 'south',
+                        margins: 5,
+                        height: 50,
+                        //xtype: 'container',
+                        html: 'footer Here'
+                    }]
+                });
+
+
+            });
+//
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
